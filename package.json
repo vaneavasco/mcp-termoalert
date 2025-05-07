@@ -1,0 +1,40 @@
+{
+  "name": "mcp-termoalert",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" jest",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "run": "tsx src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaneavasco/mcp-termoalert.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vaneavasco/mcp-termoalert/issues"
+  },
+  "homepage": "https://github.com/vaneavasco/mcp-termoalert#readme",
+  "description": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.0",
+    "cheerio": "^1.0.0",
+    "date-fns": "^4.1.0",
+    "node-fetch": "^3.3.2",
+    "tsx": "^4.19.4",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node-fetch": "^2.6.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
