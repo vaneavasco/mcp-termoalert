@@ -1,7 +1,6 @@
 import {parseIssuesTable} from './retrieve-issues.js';
 import {Issue} from './types.js';
 
-
 describe('retrieve-issues', () => {
         describe('parseIssuesTable', () => {
             it('should parse issues correctly from valid HTML', () => {
