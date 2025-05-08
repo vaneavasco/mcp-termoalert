@@ -9,29 +9,32 @@ MCP-TermoAlert is a Model Context Protocol server that provides real-time inform
 - Filters issues by sector or street name
 - Written in TypeScript for type safety and maintainability
 
-## Installation
-
-Install the package using npm:
-
-```bash
-npm install -g mcp-termoalert-bucharest
-```
-
-Or use it directly with `npx`:
-
-```bash
-npx mcp-termoalert-bucharest
-```
-
 ## Usage as MCP Server
 
-This package is designed to be used as an MCP server, which can be connected to AI assistants like Claude or other MCP-compatible clients. When run, it starts an MCP server that listens for tool calls through stdin/stdout.
+This package is designed to be used as an MCP server with stdio transport, which can be connected to AI assistants like Claude or other MCP-compatible clients. When run, it starts an MCP server that listens for tool calls through stdin/stdout.
 
 To start the server:
 
 ```bash
 npx mcp-termoalert-bucharest
 ```
+
+## Usage in Claude Desktop
+
+To use this package in Claude Desktop, you need to configure the `claude_desktop_config.json` file as follows:
+
+```json
+{
+  "mcpServers": {
+    "central-heating-issues-bucharest": {
+      "command": "npx",
+      "args": ["-y", "mcp-termoalert-bucharest"]
+    }
+  }
+}
+```
+
+This configuration allows Claude Desktop to call the MCP server for retrieving information about central heating issues in Bucharest.
 
 ## Available MCP Tools
 
@@ -86,7 +89,7 @@ interface Issue {
 
 ### Prerequisites
 
-- Node.js v16 or higher
+- Node.js v22 or higher
 - npm or yarn
 
 ### Setting Up the Development Environment
@@ -139,3 +142,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Author
 
 Developed by [Vanea Vasco](https://github.com/vaneavasco).
+`
