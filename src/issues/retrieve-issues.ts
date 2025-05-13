@@ -1,10 +1,12 @@
 import * as cheerio from "cheerio";
 import { parse } from "date-fns";
 import { ro } from "date-fns/locale";
-import fetch from "node-fetch";
 
-import { config } from "../config.js";
 import { Issue } from "./types.js";
+
+import { cache } from "@/cache-client.js";
+import { config } from "@/config.js";
+import { fetchIssuesPage } from "@/http-client.js";
 
 const EXPECTED_HEADERS = [
     "Sector",
@@ -13,22 +15,6 @@ const EXPECTED_HEADERS = [
     "Cauza / Descrierea intervenției",
     "Data/ora estimării punerii în funcțiune",
 ];
-
-/**
- * Fetches the HTML content of the issues page.
- * @param url - The URL to fetch the issues page from.
- * @returns A promise resolving to the HTML content as a string.
- * @throws Error if the fetch fails.
- */
-export async function fetchIssuesPage(url: string): Promise<string> {
-    const res = await fetch(url);
-    if (!res.ok) {
-        throw new Error(
-            `Failed to fetch issues page. HTTP Status: ${res.status} - ${res.statusText}`,
-        );
-    }
-    return res.text();
-}
 
 /**
  * Parses the HTML content to extract issues.
@@ -92,7 +78,7 @@ export function parseIssuesTable(html: string): Issue[] {
 
                 // Parse and validate the estimated restart date
                 const dateStr = $(cells[4]).text().trim();
-                const estimatedRestart = parse(dateStr, "dd.MM.yyyy HH:mm", new Date(), {
+                const estimatedRestart = parse(dateStr, config.dateFormat, new Date(), {
                     locale: ro,
                 });
                 if (isNaN(estimatedRestart.getTime())) {
@@ -122,8 +108,15 @@ export function parseIssuesTable(html: string): Issue[] {
  * @returns A promise resolving to an array of issues.
  */
 export async function retrieveIssues(): Promise<Issue[]> {
+    const cachedIssues = cache.get<Issue[]>("issues");
+    if (cachedIssues) {
+        return cachedIssues;
+    }
     const html = await fetchIssuesPage(config.issuesPageURL);
-    return parseIssuesTable(html);
+    const issues: Issue[] = parseIssuesTable(html);
+    cache.set("issues", issues);
+
+    return issues;
 }
 
 // Make sure exports are explicitly defined for ESM compatibility
