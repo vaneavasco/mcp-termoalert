@@ -1,9 +1,9 @@
-import {parseIssuesTable} from './retrieve-issues.js';
-import {Issue} from './types.js';
+import {parseIssuesTable} from "./retrieve-issues.js";
+import {Issue} from "./types.js";
 
-describe('retrieve-issues', () => {
-        describe('parseIssuesTable', () => {
-            it('should parse issues correctly from valid HTML', () => {
+describe("retrieve-issues", () => {
+        describe("parseIssuesTable", () => {
+            it("should parse issues correctly from valid HTML", () => {
                 const mockHtml = `
                 <table>
                     <tbody>
@@ -29,17 +29,17 @@ describe('retrieve-issues', () => {
                 expect(issues).toEqual<Issue[]>([
                     {
                         sector: 1,
-                        zonesAffected: ['Punct termic: Nicolae Racotă'],
-                        thermalAgent: 'Oprire ACC',
-                        description: 'Remediere avarie',
+                        zonesAffected: ["Punct termic: Nicolae Racotă"],
+                        thermalAgent: "Oprire ACC",
+                        description: "Remediere avarie",
                         estimatedRestart: new Date(2025, 4, 8, 23, 30)
                     }
                 ]);
             });
 
-            it('should throw an error if the table structure is invalid', () => {
-                const mockHtml = '<html><body>No valid table here</body></html>';
-                expect(() => parseIssuesTable(mockHtml)).toThrow('No table found with the expected headers. Ensure the page structure has not changed.');
+            it("should throw an error if the table structure is invalid", () => {
+                const mockHtml = "<html><body>No valid table here</body></html>";
+                expect(() => parseIssuesTable(mockHtml)).toThrow("No table found with the expected headers. Ensure the page structure has not changed.");
             });
         });
     });
