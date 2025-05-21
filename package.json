@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "test": "NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" jest",
-    "build": "tsc && shx chmod +x dist/index.js",
+    "build": "tsc && tsc-alias && shx chmod +x dist/index.js",
     "prepare": "npm run build",
     "watch": "tsc --watch",
     "run": "tsx src/index.ts",
@@ -48,6 +48,7 @@
     "date-fns": "^4.1.0",
     "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.19.4",
     "zod": "^3.24.4"
   },
